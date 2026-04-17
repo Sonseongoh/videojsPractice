@@ -1,15 +1,5 @@
 import { formatTime } from "@/app/lib/videoSources";
-import type { Bookmark } from "./types";
-
-type BookmarksPanelProps = {
-  bookmarkLabel: string;
-  bookmarks: Bookmark[];
-  isReady: boolean;
-  onAddBookmark: () => void;
-  onDeleteBookmark: (bookmarkId: string) => void;
-  onSeekTo: (time: number) => void;
-  onSetBookmarkLabel: (label: string) => void;
-};
+import type { BookmarksPanelProps } from "./types";
 
 export function BookmarksPanel({
   bookmarkLabel,

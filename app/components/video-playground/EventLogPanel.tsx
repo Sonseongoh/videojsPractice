@@ -1,12 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
-import type { EventLogEntry } from "./types";
-
-type EventLogPanelProps = {
-  events: EventLogEntry[];
-  logExpanded: boolean;
-  onClearEvents: () => void;
-  onSetLogExpanded: Dispatch<SetStateAction<boolean>>;
-};
+import type { EventLogPanelProps } from "./types";
 
 export function EventLogPanel({
   events,

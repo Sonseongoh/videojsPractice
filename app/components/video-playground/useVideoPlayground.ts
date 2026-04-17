@@ -3,13 +3,13 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import type Player from "video.js/dist/types/player";
 import { formatTime, videoSources } from "@/app/lib/videoSources";
-import { readPlayerNumber, writePlayerTime } from "./playerUtils";
 import type {
   Bookmark,
   EventLogEntry,
   LoopRegion,
   PlayerState,
-} from "./types";
+} from "@/app/types/video";
+import { readPlayerNumber, writePlayerTime } from "./playerUtils";
 
 export function useVideoPlayground() {
   const [selectedSourceId, setSelectedSourceId] = useState(videoSources[0].id);

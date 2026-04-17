@@ -1,11 +1,4 @@
-export type VideoSource = {
-  id: string;
-  label: string;
-  description: string;
-  src: string;
-  type: string;
-  origin: "local" | "external";
-};
+import type { VideoSource } from "@/app/types/video";
 
 export const videoSources: VideoSource[] = [
   {

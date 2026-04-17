@@ -3,16 +3,8 @@
 import { useEffect, useRef } from "react";
 import videojs from "video.js";
 import type Player from "video.js/dist/types/player";
-import type { VideoSource } from "@/app/lib/videoSources";
+import type { VideoJsPlayerProps } from "@/app/types/videoPlayer";
 import "video.js/dist/video-js.css";
-
-type VideoJsPlayerProps = {
-  source: VideoSource;
-  onReady: (player: Player) => void;
-  onDispose: () => void;
-  onEvent: (name: string, detail?: string) => void;
-  onStateTick: () => void;
-};
 
 const PLAYER_EVENTS = [
   "loadstart",

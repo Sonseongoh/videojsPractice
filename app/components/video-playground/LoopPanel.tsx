@@ -1,13 +1,5 @@
 import { formatTime } from "@/app/lib/videoSources";
-import type { LoopRegion } from "./types";
-
-type LoopPanelProps = {
-  isReady: boolean;
-  loopError: string;
-  loopRegion: LoopRegion;
-  onClearLoop: () => void;
-  onSetLoopPoint: (point: "start" | "end") => void;
-};
+import type { LoopPanelProps } from "./types";
 
 export function LoopPanel({
   isReady,

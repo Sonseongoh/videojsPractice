@@ -1,9 +1,4 @@
-import type { VideoSource } from "@/app/lib/videoSources";
-
-type PlaygroundHeaderProps = {
-  isReady: boolean;
-  selectedSource: VideoSource;
-};
+import type { PlaygroundHeaderProps } from "./types";
 
 export function PlaygroundHeader({
   isReady,

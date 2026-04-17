@@ -1,17 +1,5 @@
 import { rateOptions } from "./constants";
-import type { PlayerState } from "./types";
-
-type PlayerControlsProps = {
-  isPlaying: boolean;
-  isReady: boolean;
-  playerState: PlayerState;
-  onPlayPause: () => void;
-  onRequestFullscreen: () => void;
-  onSeekBy: (delta: number) => void;
-  onSetRate: (rate: number) => void;
-  onSetVolume: (volume: number) => void;
-  onToggleMute: () => void;
-};
+import type { PlayerControlsProps } from "./types";
 
 export function PlayerControls({
   isPlaying,

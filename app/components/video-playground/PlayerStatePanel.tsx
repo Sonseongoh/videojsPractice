@@ -1,12 +1,5 @@
-import type { VideoSource } from "@/app/lib/videoSources";
 import { formatTime } from "@/app/lib/videoSources";
-import type { PlayerState } from "./types";
-
-type PlayerStatePanelProps = {
-  isPlaying: boolean;
-  playerState: PlayerState;
-  selectedSource: VideoSource;
-};
+import type { PlayerStatePanelProps, StateRowProps } from "./types";
 
 export function PlayerStatePanel({
   isPlaying,
@@ -38,7 +31,7 @@ export function PlayerStatePanel({
   );
 }
 
-function StateRow({ label, value }: { label: string; value: string }) {
+function StateRow({ label, value }: StateRowProps) {
   return (
     <div className="contents">
       <dt className="text-[var(--lab-muted)]">{label}</dt>

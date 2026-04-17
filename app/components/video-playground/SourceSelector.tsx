@@ -1,10 +1,5 @@
-import type { VideoSource } from "@/app/lib/videoSources";
 import { videoSources } from "@/app/lib/videoSources";
-
-type SourceSelectorProps = {
-  selectedSource: VideoSource;
-  onChangeSource: (sourceId: string) => void;
-};
+import type { SourceSelectorProps } from "./types";
 
 export function SourceSelector({
   selectedSource,
