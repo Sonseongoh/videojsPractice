@@ -4,6 +4,7 @@ import type {
   Bookmark,
   EventLogEntry,
   LoopRegion,
+  PlaybackError,
   PlayerState,
 } from "@/app/types/video";
 
@@ -63,4 +64,10 @@ export type EventLogPanelProps = {
   logExpanded: boolean;
   onClearEvents: () => void;
   onSetLogExpanded: Dispatch<SetStateAction<boolean>>;
+};
+
+export type PlaybackErrorPanelProps = {
+  error: PlaybackError;
+  onDismiss: () => void;
+  onRetry: () => void;
 };

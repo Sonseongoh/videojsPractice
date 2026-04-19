@@ -7,7 +7,9 @@ import type {
   Bookmark,
   EventLogEntry,
   LoopRegion,
+  PlaybackError,
   PlayerState,
+  VideoSource,
 } from "@/app/types/video";
 import { readPlayerNumber, writePlayerTime } from "./playerUtils";
 
@@ -31,6 +33,7 @@ export function useVideoPlayground() {
   const [bookmarkLabel, setBookmarkLabel] = useState("");
   const [loopRegion, setLoopRegion] = useState<LoopRegion>({});
   const [loopError, setLoopError] = useState("");
+  const [playbackError, setPlaybackError] = useState<PlaybackError | null>(null);
   const [logExpanded, setLogExpanded] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
 
@@ -103,11 +106,52 @@ export function useVideoPlayground() {
     setPlayerState({});
   }, []);
 
+  const dismissPlaybackError = useCallback(() => {
+    setPlaybackError(null);
+  }, []);
+
+  const handlePlaybackError = useCallback(
+    ({
+      code,
+      message,
+      source,
+    }: {
+      code?: number;
+      message: string;
+      source: VideoSource;
+    }) => {
+      setPlaybackError({
+        code,
+        message,
+        sourceId: source.id,
+        sourceLabel: source.label,
+        sourceType: source.type,
+        sourceOrigin: source.origin,
+      });
+    },
+    [],
+  );
+
   const changeSource = (sourceId: string) => {
     setSelectedSourceId(sourceId);
     setLoopRegion({});
     loopRef.current = {};
     setLoopError("");
+    setPlaybackError(null);
+  };
+
+  const retrySource = () => {
+    const player = playerRef.current;
+
+    if (!player) {
+      return;
+    }
+
+    setPlaybackError(null);
+    player.src({ src: selectedSource.src, type: selectedSource.type });
+    player.load();
+    addEvent("retry", selectedSource.label);
+    syncPlayerState();
   };
 
   const playPause = () => {
@@ -272,7 +316,9 @@ export function useVideoPlayground() {
     clearLoop,
     deleteBookmark,
     events,
+    dismissPlaybackError,
     handleDispose,
+    handlePlaybackError,
     handleReady,
     isPlaying,
     isReady,
@@ -280,8 +326,10 @@ export function useVideoPlayground() {
     loopError,
     loopRegion,
     playPause,
+    playbackError,
     playerState,
     requestFullscreen,
+    retrySource,
     seekBy,
     seekTo,
     selectedSource,

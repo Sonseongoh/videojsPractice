@@ -24,6 +24,15 @@ export type PlayerState = {
   bufferedPercent?: number;
 };
 
+export type PlaybackError = {
+  code?: number;
+  message: string;
+  sourceId: string;
+  sourceLabel: string;
+  sourceType: string;
+  sourceOrigin: VideoSource["origin"];
+};
+
 export type Bookmark = {
   id: string;
   label: string;

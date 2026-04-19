@@ -24,23 +24,38 @@ export default function VideoJsPlayer({
   onReady,
   onDispose,
   onEvent,
+  onPlaybackError,
   onStateTick,
 }: VideoJsPlayerProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const playerRef = useRef<Player | null>(null);
   const initialSourceRef = useRef(source);
   const sourceRef = useRef(source.id);
+  const currentSourceRef = useRef(source);
   const sourceLabelRef = useRef(source.label);
   const lastTimeUpdateRef = useRef(0);
-  const callbacksRef = useRef({ onReady, onDispose, onEvent, onStateTick });
+  const callbacksRef = useRef({
+    onReady,
+    onDispose,
+    onEvent,
+    onPlaybackError,
+    onStateTick,
+  });
 
   useEffect(() => {
-    callbacksRef.current = { onReady, onDispose, onEvent, onStateTick };
-  }, [onReady, onDispose, onEvent, onStateTick]);
+    callbacksRef.current = {
+      onReady,
+      onDispose,
+      onEvent,
+      onPlaybackError,
+      onStateTick,
+    };
+  }, [onReady, onDispose, onEvent, onPlaybackError, onStateTick]);
 
   useEffect(() => {
     sourceLabelRef.current = source.label;
-  }, [source.label]);
+    currentSourceRef.current = source;
+  }, [source]);
 
   useEffect(() => {
     if (!videoRef.current || playerRef.current) {
@@ -77,6 +92,13 @@ export default function VideoJsPlayer({
             ? `${error.code}: ${error.message}`
             : undefined;
         callbacksRef.current.onEvent(eventName, detail);
+        if (eventName === "error" && error) {
+          callbacksRef.current.onPlaybackError({
+            code: error.code,
+            message: error.message,
+            source: currentSourceRef.current,
+          });
+        }
         callbacksRef.current.onStateTick();
       };
 
@@ -112,6 +134,7 @@ export default function VideoJsPlayer({
     }
 
     sourceRef.current = source.id;
+    currentSourceRef.current = source;
     sourceLabelRef.current = source.label;
     player.src({ src: source.src, type: source.type });
     player.load();

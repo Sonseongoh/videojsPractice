@@ -5,6 +5,7 @@ import { BookmarksPanel } from "./video-playground/BookmarksPanel";
 import { EventLogPanel } from "./video-playground/EventLogPanel";
 import { LoopPanel } from "./video-playground/LoopPanel";
 import { PlayerControls } from "./video-playground/PlayerControls";
+import { PlaybackErrorPanel } from "./video-playground/PlaybackErrorPanel";
 import { PlayerStatePanel } from "./video-playground/PlayerStatePanel";
 import { PlaygroundHeader } from "./video-playground/PlaygroundHeader";
 import { SourceSelector } from "./video-playground/SourceSelector";
@@ -28,11 +29,20 @@ export default function VideoPlayground() {
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1.9fr)_minmax(340px,1fr)]">
           <section className="flex min-w-0 flex-col gap-4">
+            {playground.playbackError ? (
+              <PlaybackErrorPanel
+                error={playground.playbackError}
+                onDismiss={playground.dismissPlaybackError}
+                onRetry={playground.retrySource}
+              />
+            ) : null}
+
             <VideoJsPlayer
               source={playground.selectedSource}
               onReady={playground.handleReady}
               onDispose={playground.handleDispose}
               onEvent={playground.addEvent}
+              onPlaybackError={playground.handlePlaybackError}
               onStateTick={playground.syncPlayerState}
             />
 
