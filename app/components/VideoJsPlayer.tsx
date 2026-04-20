@@ -17,10 +17,59 @@ const PLAYER_EVENTS = [
   "volumechange",
   "ended",
   "error",
+  "texttrackchange",
 ] as const;
+
+const TEXT_TRACK_OFF = "off";
+
+function getTextTracks(player: Player) {
+  return player.textTracks() as unknown as ArrayLike<
+    TextTrack & { id?: string }
+  >;
+}
+
+function applyTextTrackMode(player: Player, activeTextTrackId: string) {
+  const tracks = getTextTracks(player);
+
+  for (let index = 0; index < tracks.length; index += 1) {
+    const track = tracks[index];
+    track.mode =
+      activeTextTrackId !== TEXT_TRACK_OFF && track.id === activeTextTrackId
+        ? "showing"
+        : "disabled";
+  }
+}
+
+function addTextTracks(player: Player, source: VideoJsPlayerProps["source"]) {
+  source.textTracks?.forEach((track) => {
+    player.addRemoteTextTrack(
+      {
+        id: track.id,
+        kind: track.kind,
+        label: track.label,
+        language: track.language,
+        srclang: track.language,
+        src: track.src,
+        default: track.default,
+      },
+      false,
+    );
+  });
+}
+
+function removeRemoteTextTracks(player: Player) {
+  const tracks = player.remoteTextTracks() as unknown as ArrayLike<
+    TextTrack & { id?: string }
+  >;
+
+  for (let index = tracks.length - 1; index >= 0; index -= 1) {
+    player.removeRemoteTextTrack(tracks[index]);
+  }
+}
 
 export default function VideoJsPlayer({
   source,
+  activeTextTrackId,
   onReady,
   onDispose,
   onEvent,
@@ -35,6 +84,7 @@ export default function VideoJsPlayer({
   const sourceLabelRef = useRef(source.label);
   const lastTimeUpdateRef = useRef(0);
   const callbacksRef = useRef({
+    activeTextTrackId,
     onReady,
     onDispose,
     onEvent,
@@ -44,13 +94,21 @@ export default function VideoJsPlayer({
 
   useEffect(() => {
     callbacksRef.current = {
+      activeTextTrackId,
       onReady,
       onDispose,
       onEvent,
       onPlaybackError,
       onStateTick,
     };
-  }, [onReady, onDispose, onEvent, onPlaybackError, onStateTick]);
+  }, [
+    activeTextTrackId,
+    onReady,
+    onDispose,
+    onEvent,
+    onPlaybackError,
+    onStateTick,
+  ]);
 
   useEffect(() => {
     sourceLabelRef.current = source.label;
@@ -73,6 +131,8 @@ export default function VideoJsPlayer({
 
     playerRef.current = player;
     sourceRef.current = initialSource.id;
+    addTextTracks(player, initialSource);
+    applyTextTrackMode(player, callbacksRef.current.activeTextTrackId);
 
     const handleTimeUpdate = () => {
       const now = Date.now();
@@ -129,6 +189,17 @@ export default function VideoJsPlayer({
   useEffect(() => {
     const player = playerRef.current;
 
+    if (!player) {
+      return;
+    }
+
+    applyTextTrackMode(player, activeTextTrackId);
+    onStateTick();
+  }, [activeTextTrackId, onStateTick]);
+
+  useEffect(() => {
+    const player = playerRef.current;
+
     if (!player || sourceRef.current === source.id) {
       return;
     }
@@ -136,11 +207,14 @@ export default function VideoJsPlayer({
     sourceRef.current = source.id;
     currentSourceRef.current = source;
     sourceLabelRef.current = source.label;
+    removeRemoteTextTracks(player);
     player.src({ src: source.src, type: source.type });
+    addTextTracks(player, source);
+    applyTextTrackMode(player, activeTextTrackId);
     player.load();
     onEvent("sourcechange", source.label);
     onStateTick();
-  }, [onEvent, onStateTick, source]);
+  }, [activeTextTrackId, onEvent, onStateTick, source]);
 
   return (
     <div className="player-frame">

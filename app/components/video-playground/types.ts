@@ -30,6 +30,13 @@ export type PlayerControlsProps = {
   onToggleMute: () => void;
 };
 
+export type CaptionsPanelProps = {
+  activeTextTrackId: string;
+  isReady: boolean;
+  selectedSource: VideoSource;
+  onSetTextTrack: (trackId: string) => void;
+};
+
 export type LoopPanelProps = {
   isReady: boolean;
   loopError: string;

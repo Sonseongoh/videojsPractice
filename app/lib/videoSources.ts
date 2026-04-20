@@ -8,6 +8,16 @@ export const videoSources: VideoSource[] = [
     src: "/videos/flower.mp4",
     type: "video/mp4",
     origin: "local",
+    textTracks: [
+      {
+        id: "flower-ko",
+        label: "한국어",
+        language: "ko",
+        src: "/captions/flower-ko.vtt",
+        kind: "subtitles",
+        default: true,
+      },
+    ],
   },
   {
     id: "sintel",
@@ -16,6 +26,16 @@ export const videoSources: VideoSource[] = [
     src: "/videos/sintel-trailer.mp4",
     type: "video/mp4",
     origin: "local",
+    textTracks: [
+      {
+        id: "sintel-ko",
+        label: "한국어",
+        language: "ko",
+        src: "/captions/sintel-ko.vtt",
+        kind: "subtitles",
+        default: true,
+      },
+    ],
   },
   {
     id: "hls-tears",

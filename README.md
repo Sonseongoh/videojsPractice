@@ -35,6 +35,7 @@ npm run start
   커스텀 컨트롤 만들기
 - 현재 재생 위치를 북마크로 저장하고 다시 이동하기
 - 시작/끝 지점을 지정해서 구간 반복 기능 만들기
+- WebVTT 자막 파일을 Video.js 원격 텍스트 트랙으로 추가하고 켜고 끄기
 
 ## 프로젝트 구조
 
@@ -57,6 +58,9 @@ app/
     video.ts
     videoPlayer.ts
 public/
+  captions/
+    flower-ko.vtt
+    sintel-ko.vtt
   videos/
     flower.mp4
     sintel-trailer.mp4
@@ -84,11 +88,9 @@ npm run build
 ## 다음에 해볼 만한 실험
 
 1. 북마크, 배속, 음량 설정을 `localStorage`에 저장하기
-2. HLS 로딩 실패 시 사용자에게 더 명확한 오류 UI 보여주기
-3. 자막 트랙을 추가하고 Video.js text tracks API 다뤄보기
-4. 썸네일 프리뷰 또는 챕터 목록 만들기
-5. 여러 영상을 이어 재생하는 간단한 playlist 기능 만들기
-6. Video.js 플러그인을 직접 만들어 붙여보기
+2. 썸네일 프리뷰 또는 챕터 목록 만들기
+3. 여러 영상을 이어 재생하는 간단한 playlist 기능 만들기
+4. Video.js 플러그인을 직접 만들어 붙여보기
 
 ## 참고
 

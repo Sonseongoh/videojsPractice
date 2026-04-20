@@ -13,6 +13,14 @@ import type {
 } from "@/app/types/video";
 import { readPlayerNumber, writePlayerTime } from "./playerUtils";
 
+const TEXT_TRACK_OFF = "off";
+
+function getDefaultTextTrackId(source: VideoSource) {
+  return (
+    source.textTracks?.find((track) => track.default)?.id ?? TEXT_TRACK_OFF
+  );
+}
+
 export function useVideoPlayground() {
   const [selectedSourceId, setSelectedSourceId] = useState(videoSources[0].id);
   const selectedSource = useMemo(
@@ -36,6 +44,9 @@ export function useVideoPlayground() {
   const [playbackError, setPlaybackError] = useState<PlaybackError | null>(null);
   const [logExpanded, setLogExpanded] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
+  const [activeTextTrackId, setActiveTextTrackId] = useState(() =>
+    getDefaultTextTrackId(videoSources[0]),
+  );
 
   const bookmarks = bookmarksBySource[selectedSource.id] ?? [];
   const isReady = playerReady;
@@ -133,11 +144,24 @@ export function useVideoPlayground() {
   );
 
   const changeSource = (sourceId: string) => {
+    const nextSource =
+      videoSources.find((source) => source.id === sourceId) ?? videoSources[0];
+
     setSelectedSourceId(sourceId);
+    setActiveTextTrackId(getDefaultTextTrackId(nextSource));
     setLoopRegion({});
     loopRef.current = {};
     setLoopError("");
     setPlaybackError(null);
+  };
+
+  const setTextTrack = (trackId: string) => {
+    const selectedTrack = selectedSource.textTracks?.find(
+      (track) => track.id === trackId,
+    );
+
+    setActiveTextTrackId(trackId);
+    addEvent("caption", selectedTrack ? selectedTrack.label : "끄기");
   };
 
   const retrySource = () => {
@@ -310,6 +334,7 @@ export function useVideoPlayground() {
   return {
     addBookmark,
     addEvent,
+    activeTextTrackId,
     bookmarks,
     bookmarkLabel,
     changeSource,
@@ -338,6 +363,7 @@ export function useVideoPlayground() {
     setLogExpanded,
     setLoopPoint,
     setRate,
+    setTextTrack,
     setVolume,
     syncPlayerState,
     toggleMute,

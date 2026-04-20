@@ -1,3 +1,12 @@
+export type TextTrackSource = {
+  id: string;
+  label: string;
+  language: string;
+  src: string;
+  kind: "subtitles" | "captions";
+  default?: boolean;
+};
+
 export type VideoSource = {
   id: string;
   label: string;
@@ -5,6 +14,7 @@ export type VideoSource = {
   src: string;
   type: string;
   origin: "local" | "external";
+  textTracks?: TextTrackSource[];
 };
 
 export type EventLogEntry = {

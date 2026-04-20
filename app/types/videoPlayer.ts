@@ -3,6 +3,7 @@ import type { VideoSource } from "./video";
 
 export type VideoJsPlayerProps = {
   source: VideoSource;
+  activeTextTrackId: string;
   onReady: (player: Player) => void;
   onDispose: () => void;
   onEvent: (name: string, detail?: string) => void;

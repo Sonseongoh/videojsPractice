@@ -2,6 +2,7 @@
 
 import VideoJsPlayer from "@/app/components/VideoJsPlayer";
 import { BookmarksPanel } from "./video-playground/BookmarksPanel";
+import { CaptionsPanel } from "./video-playground/CaptionsPanel";
 import { EventLogPanel } from "./video-playground/EventLogPanel";
 import { LoopPanel } from "./video-playground/LoopPanel";
 import { PlayerControls } from "./video-playground/PlayerControls";
@@ -39,6 +40,7 @@ export default function VideoPlayground() {
 
             <VideoJsPlayer
               source={playground.selectedSource}
+              activeTextTrackId={playground.activeTextTrackId}
               onReady={playground.handleReady}
               onDispose={playground.handleDispose}
               onEvent={playground.addEvent}
@@ -56,6 +58,13 @@ export default function VideoPlayground() {
               onSetRate={playground.setRate}
               onSetVolume={playground.setVolume}
               onToggleMute={playground.toggleMute}
+            />
+
+            <CaptionsPanel
+              activeTextTrackId={playground.activeTextTrackId}
+              isReady={playground.isReady}
+              selectedSource={playground.selectedSource}
+              onSetTextTrack={playground.setTextTrack}
             />
           </section>
 
