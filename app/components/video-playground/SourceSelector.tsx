@@ -20,6 +20,7 @@ export function SourceSelector({
           <button
             key={source.id}
             type="button"
+            aria-pressed={source.id === selectedSource.id}
             className={`source-button ${
               source.id === selectedSource.id ? "source-button-active" : ""
             }`}
