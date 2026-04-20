@@ -31,8 +31,12 @@
   }
 }
 
+html,
 body {
-  background: var(--background);
+  background: var(--lab-bg);
+}
+
+body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
 }
