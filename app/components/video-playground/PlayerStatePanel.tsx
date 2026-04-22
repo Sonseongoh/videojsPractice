@@ -17,10 +17,10 @@ export function PlayerStatePanel({
         <StateRow label="속도" value={`${playerState.playbackRate ?? "--"}x`} />
         <StateRow label="상태" value={isPlaying ? "재생 중" : "일시정지"} />
         <StateRow
-          label="음량"
+          label="볼륨"
           value={`${Math.round((playerState.volume ?? 0) * 100)}%`}
         />
-        <StateRow label="음소거" value={playerState.muted ? "예" : "아니오"} />
+        <StateRow label="음소거" value={playerState.muted ? "예" : "아니요"} />
         <StateRow
           label="버퍼"
           value={`${Math.round((playerState.bufferedPercent ?? 0) * 100)}%`}

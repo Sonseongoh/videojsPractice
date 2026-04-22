@@ -27,7 +27,7 @@ export function PlaybackErrorPanel({
         </p>
         <p className="mt-2 text-xs leading-5 text-[var(--lab-muted)]">
           {isExternalHls
-            ? "외부 HLS 스트림은 브라우저 지원, 네트워크 상태, CORS 정책에 따라 재생이 실패할 수 있습니다. 로컬 MP4 소스로 바꿔보거나 잠시 뒤 다시 시도해보세요."
+            ? "외부 HLS 스트림은 브라우저 지원, 네트워크 상태, CORS 정책에 따라 재생에 실패할 수 있습니다. 로컬 MP4 소스로 바꾸거나 잠시 후 다시 시도해보세요."
             : "소스 파일 경로, 파일 형식, 네트워크 상태를 확인해보세요."}
         </p>
       </div>

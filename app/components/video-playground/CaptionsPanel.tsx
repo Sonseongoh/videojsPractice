@@ -49,7 +49,7 @@ export function CaptionsPanel({
           </div>
           <p className="mt-3 text-xs leading-5 text-[var(--lab-muted)]">
             WebVTT 파일을 Video.js 원격 텍스트 트랙으로 추가합니다. 기본
-            컨트롤의 자막 메뉴와 이 버튼이 같은 트랙을 다룹니다.
+            컨트롤의 자막 메뉴와 이 버튼은 같은 트랙을 다룹니다.
           </p>
         </>
       ) : (

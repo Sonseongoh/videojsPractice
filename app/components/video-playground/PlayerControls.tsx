@@ -58,7 +58,7 @@ export function PlayerControls({
           onClick={onRequestFullscreen}
           disabled={!isReady}
         >
-          전체화면
+          전체 화면
         </button>
       </div>
 
@@ -84,7 +84,7 @@ export function PlayerControls({
         </div>
         <label className="block">
           <span className="mb-2 block text-xs font-medium text-[var(--lab-muted)]">
-            음량 {Math.round((playerState.volume ?? 0) * 100)}%
+            볼륨 {Math.round((playerState.volume ?? 0) * 100)}%
           </span>
           <input
             className="w-full accent-[var(--lab-accent)]"

@@ -431,7 +431,7 @@ export function useVideoPlayground() {
 
     if (player.requestFullscreen) {
       player.requestFullscreen();
-      addEvent("fullscreen", "전체화면 요청");
+      addEvent("fullscreen", "전체 화면 요청");
     }
   };
 

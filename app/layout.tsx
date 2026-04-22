@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Video.js 플레이그라운드",
-  description: "React와 Next에서 Video.js API를 실험하는 학습용 앱입니다.",
+  description: "React와 Next.js에서 Video.js API를 실험하는 학습용 앱입니다.",
 };
 
 export default function RootLayout({

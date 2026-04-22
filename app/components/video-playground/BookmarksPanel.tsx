@@ -34,7 +34,7 @@ export function BookmarksPanel({
       <div className="mt-3 flex flex-col gap-2">
         {bookmarks.length === 0 ? (
           <p className="rounded-md border border-dashed border-[var(--lab-border)] p-3 text-sm text-[var(--lab-muted)]">
-            이 영상에는 아직 북마크가 없습니다. 재생 중 원하는 시점에서
+            이 영상에는 아직 북마크가 없습니다. 재생 중 원하는 지점에서
             북마크를 추가하세요.
           </p>
         ) : (
